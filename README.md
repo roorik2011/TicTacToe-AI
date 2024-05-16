@@ -1,7 +1,7 @@
 # TicTacToe API 🎮
 
 ## Overview 📝
-TicTacToe API is a Python-based project that provides an interface for building, training, and using a neural network to play the classic game of Tic-Tac-Toe. The project leverages TensorFlow and Keras to create and manage the model.
+TicTacToe API is a Python-based project that provides functionalities for building, training, and using a neural network to play the classic game of Tic-Tac-Toe. The project leverages TensorFlow and Keras to create and manage the model.
 
 ## Table of Contents 📚
 1. [Project Description](#project-description)
