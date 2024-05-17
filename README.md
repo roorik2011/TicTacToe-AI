@@ -76,7 +76,7 @@ ai.delete_model('tictactoe_model.h5')
 
 ## Playing the Game with AI 🤖
 To play a game where the AI makes moves:
-```pthon
+```python
 from tictactoe import TicTacToeAI, TicTacToeAPI
 
 ai = TicTacToeAI()
