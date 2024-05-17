@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Dense, Flatten
 import os
 import glob
 
-class TicTacToeAPI:
+class TicTacToeAI:
     def __init__(self):
         self.model = self.build_model()
 
@@ -63,14 +63,6 @@ class TicTacToeAPI:
             move = np.argmax(pred)
         return move
 
-    def check_winner(self, board, player):
-        for i in range(3):
-            if np.all(board[i, :] == player) or np.all(board[:, i] == player):
-                return True
-        if board[0, 0] == board[1, 1] == board[2, 2] == player or board[0, 2] == board[1, 1] == board[2, 0] == player:
-            return True
-        return False
-
     def save_model(self, filename=None):
         if filename is None:
             directory = "models"
@@ -114,3 +106,49 @@ class TicTacToeAPI:
             print(f"Model deleted: {filepath}")
         else:
             print(f"Model file not found: {filepath}")
+
+class TicTacToeAPI:
+    def __init__(self, ai: TicTacToeAI, ai_first=False):
+        self.ai = ai
+        self.board = np.zeros((3, 3), dtype=int)
+        self.current_player = -1 if ai_first else 1  # AI starts if ai_first is True
+        if ai_first:
+            self.ai_move()
+
+    def reset_board(self, ai_first=False):
+        self.board = np.zeros((3, 3), dtype=int)
+        self.current_player = -1 if ai_first else 1
+        if ai_first:
+            self.ai_move()
+
+    def make_move(self, position):
+        if self.board.flatten()[position] == 0:
+            self.board[position // 3, position % 3] = self.current_player
+            if self.check_winner(self.current_player):
+                self.print_board()
+                winner = 'AI' if self.current_player == -1 else 'Player'
+                print(f"{winner} wins!")
+                return True
+            if np.all(self.board != 0):
+                self.print_board()
+                print("It's a draw!")
+                return True
+            self.current_player = -self.current_player
+        else:
+            print("Invalid move!")
+        return False
+
+    def ai_move(self):
+        position = self.ai.predict_move(self.board)
+        return self.make_move(position)
+
+    def check_winner(self, player):
+        for i in range(3):
+            if np.all(self.board[i, :] == player) or np.all(self.board[:, i] == player):
+                return True
+        if self.board[0, 0] == self.board[1, 1] == self.board[2, 2] == player or self.board[0, 2] == self.board[1, 1] == self.board[2, 0] == player:
+            return True
+        return False
+
+    def print_board(self):
+        print(self.board)

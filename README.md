@@ -1,7 +1,7 @@
-# TicTacToe API 🎮
+# TicTacToe AI + API 🎮
 
 ## Overview 📝
-TicTacToe API is a Python-based project that provides functionalities for building, training, and using a neural network to play the classic game of Tic-Tac-Toe. The project leverages TensorFlow and Keras to create and manage the model.
+TicTacToe AI + API is a Python-based project that provides functionalities for building, training, and using a neural network to play the classic game of Tic-Tac-Toe. The project leverages TensorFlow and Keras to create and manage the model.
 
 ## Table of Contents 📚
 1. [Project Description](#project-description)
@@ -39,63 +39,67 @@ Here is a brief guide on how to use the TicTacToe API.
 ### Building and Training the Model 🏗️
 To build and train the neural network model:
 ```python
-from tictactoe import TicTacToeAPI
+from tictactoe import TicTacToeAI
 
-api = TicTacToeAPI()
-api.train(epochs=25, batch_size=32)
-api.save_model('tictactoe_model.h5')
+ai = TicTacToeAI()
+ai.train(epochs=25, batch_size=32)
+ai.save_model('tictactoe_model.h5')
 ```
 
 ### Loading and Using the Model 🔍
 To load a pre-trained model and use it for predictions:
 ```python
-from tictactoe import TicTacToeAPI
+from tictactoe import TicTacToeAI
 import numpy as np
 
-api = TicTacToeAPI()
-api.load_model('tictactoe_model.h5')
+ai = TicTacToeAI()
+ai.load_model('tictactoe_model.h5')
 
 # Example board state
 board = np.array([[1, 0, -1],
                   [0, 1, -1],
                   [0, 0, 0]])
 
-move = api.predict_move(board)
+move = ai.predict_move(board)
 print(f"Predicted move: {move}")
 ```
 
 ### Managing Models 🗂️
 List all saved models:
 ```python
-api.list_models()
+ai.list_models()
+```
+Delete a saved model:
+```python
+ai.delete_model('tictactoe_model.h5')
 ```
 
-## Examples 📖
-Here are a few examples to help you get started.
+## Playing the Game with AI 🤖
+To play a game where the AI makes moves:
+```pthon
+from tictactoe import TicTacToeAI, TicTacToeAPI
 
-#### Example 1: Training a Model 📚
-```python
-from tictactoe import TicTacToeAPI
+ai = TicTacToeAI()
+ai.load_model('tictactoe_model.h5')
+api = TicTacToeAPI(ai, ai_first=True)
 
-api = TicTacToeAPI()
-api.train(epochs=10, batch_size=32)
-api.save_model()
-```
+api.reset_board(ai_first=True)  # Reset board with AI starting the game
+api.print_board()
 
-#### Example 2: Predicting a Move 🔮
-```python
-from tictactoe import TicTacToeAPI
-import numpy as np
+# Player makes a move (enter position 0-8)
+player_move = int(input("Enter your move (0-8): "))
+game_over = api.make_move(player_move)
+api.print_board()
 
-api = TicTacToeAPI()
-api.load_model('tictactoe_model.h5')
-
-board = np.array([[1, 0, 0],
-                  [0, -1, 1],
-                  [0, 0, -1]])
-
-move = api.predict_move(board)
-print(f"Predicted move: {move}")
+# Continue game until there is a winner or a draw
+while not game_over:
+    game_over = api.ai_move()
+    api.print_board()
+    if game_over:
+        break
+    player_move = int(input("Enter your move (0-8): "))
+    game_over = api.make_move(player_move)
+    api.print_board()
 ```
 
 ### License 📜
