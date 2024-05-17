@@ -23,7 +23,7 @@ To get started with the TicTacToe API, follow these steps:
 
 ### Clone the Repository 📂
 ```sh
-git clone https://github.com/yourusername/tictactoe-api.git
+git clone https://github.com/roorik2011/TicTacToe-AI.git
 cd tictactoe-api
 ```
 
