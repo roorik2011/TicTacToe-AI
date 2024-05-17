@@ -7,8 +7,7 @@ TicTacToe AI + API is a Python-based project that provides functionalities for b
 1. [Project Description](#project-description)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [Examples](#examples)
-5. [License](#license)
+4. [License](#license)
 
 ## Project Description 🧩
 The TicTacToe API is designed to simulate and learn the game of Tic-Tac-Toe using a neural network. The API provides functionalities to:
@@ -100,6 +99,17 @@ while not game_over:
     player_move = int(input("Enter your move (0-8): "))
     game_over = api.make_move(player_move)
     api.print_board()
+```
+
+### Using the UI 🖥️
+The project also offers a UI for interacting with the TicTacToe AI. Here is how to use it:
+```python
+import tkinter as tk
+from tictactoe import TicTacToeUI
+
+root = tk.Tk()
+app = TicTacToeUI(root)
+root.mainloop()
 ```
 
 ### License 📜
